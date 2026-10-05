@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+:root {
+  --cream: #fff9f2;
+  --ink: #292524;
+  --brand: #b9472b;
+  --brand-light: #e8956d;
+  --brand-tint: #fbeae3;
+  --line: #efe4d8;
+}
+
+/* Exposes the palette as Tailwind utilities: bg-brand, text-ink, border-line, ... */
+@theme inline {
+  --color-cream: var(--cream);
+  --color-ink: var(--ink);
+  --color-brand: var(--brand);
+  --color-brand-light: var(--brand-light);
+  --color-brand-tint: var(--brand-tint);
+  --color-line: var(--line);
+  --font-sans: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-card-hover: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
+
+/* 16px minimum on form fields prevents iOS from zooming in on focus. */
+input,
+select,
+textarea {
+  font-size: 16px;
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-brand px-6 py-3 text-base font-bold text-white transition duration-300 hover:bg-[#a33d24] active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-stone-300 disabled:text-stone-500;
+  }
+
+  .card {
+    @apply rounded-2xl bg-white shadow-card;
+  }
+}

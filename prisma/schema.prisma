@@ -1,0 +1,40 @@
+// Prisma 7: connection URL lives in prisma.config.ts, the client uses a driver adapter.
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  orderNumber     String      @unique
+  customerName    String      @default("")
+  customerPhone   String      @default("")
+  customerEmail   String      @default("")
+  address         String      @default("")
+  city            String      @default("")
+  county          String      @default("")
+  postalCode      String      @default("")
+  total           Float
+  shippingCost    Float
+  // PENDING | PAID | SHIPPED
+  status          String      @default("PENDING")
+  paymentMethod   String      @default("card")
+  stripeSessionId String?     @unique
+  createdAt       DateTime    @default(now())
+  items           OrderItem[]
+}
+
+model OrderItem {
+  id          String @id @default(cuid())
+  orderId     String
+  order       Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId   String
+  productName String
+  size        String
+  quantity    Int
+  price       Float
+}
