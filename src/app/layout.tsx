@@ -14,6 +14,13 @@ const nunito = Nunito({
 export const metadata: Metadata = {
   title: "MiciiEroi - Costume pentru Copii",
   description: "Costume pentru serbări, petreceri și zile pline de imaginație.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "48x48" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
