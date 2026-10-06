@@ -1,0 +1,5 @@
+# Local-only files that must not be uploaded by `vercel` deploys
+/docs/
+*.db
+*.db-journal
+.env*
