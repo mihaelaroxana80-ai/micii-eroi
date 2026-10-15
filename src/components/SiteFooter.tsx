@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { CONTACT, HAS_CONTACT, SAL_BADGE } from "@/lib/config";
-import { LEGAL_PAGES, SELLER_NAME, type LegalPageKey } from "@/lib/legal";
+import { LEGAL_PAGES, type LegalPageKey } from "@/lib/legal";
 import { HideOnPath } from "./HideOnPath";
 import { WhatsAppButton } from "./WhatsAppButton";
 
@@ -57,7 +57,7 @@ export function SiteFooter() {
       )}
 
       <p className="mt-8 text-sm text-stone-400">
-        © {new Date().getFullYear()} MiciiEroi · {SELLER_NAME}
+        © {new Date().getFullYear()} MiciiEroi
       </p>
     </footer>
   );
