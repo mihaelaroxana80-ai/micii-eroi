@@ -1,8 +1,9 @@
 import { isAdminRequest } from "@/lib/admin-auth";
 import { getProduct } from "@/lib/products";
-import { getStockReport, setSoldOut } from "@/lib/stock";
+import { getStockReport, recordExternalSale, setSoldOut } from "@/lib/stock";
 
 const unauthorized = () => Response.json({ error: "Neautorizat" }, { status: 401 });
+const invalid = () => Response.json({ error: "Date invalide" }, { status: 400 });
 
 export async function GET(req: Request) {
   if (!isAdminRequest(req)) return unauthorized();
@@ -10,16 +11,31 @@ export async function GET(req: Request) {
   return Response.json({ stock: await getStockReport() });
 }
 
-// Marks a product size as out of stock (soldOut: true) or back on sale (soldOut: false).
+// One action per request:
+// - { soldOut: boolean } marks a size out of stock / back on sale;
+// - { soldExternally: number } adds units sold outside the site;
+// - { resetExternal: true } sets the externally sold count back to 0.
 export async function POST(req: Request) {
   if (!isAdminRequest(req)) return unauthorized();
 
-  const { productId, size, soldOut } = await req.json().catch(() => ({}));
+  const { productId, size, soldOut, soldExternally, resetExternal } = await req.json().catch(() => ({}));
   const product = typeof productId === "string" ? getProduct(productId) : undefined;
-  if (!product || !product.variants.some((v) => v.size === size) || typeof soldOut !== "boolean") {
-    return Response.json({ error: "Date invalide" }, { status: 400 });
+  if (!product || !product.variants.some((v) => v.size === size)) return invalid();
+
+  try {
+    if (typeof soldOut === "boolean") {
+      await setSoldOut(product.id, size, soldOut);
+    } else if (resetExternal === true) {
+      await recordExternalSale(product.id, size, 0, true);
+    } else if (Number.isInteger(soldExternally) && soldExternally >= 1 && soldExternally <= 100) {
+      await recordExternalSale(product.id, size, soldExternally);
+    } else {
+      return invalid();
+    }
+  } catch (err) {
+    console.error("Stock update failed", err);
+    return Response.json({ error: "Nu s-a putut salva. Verifică baza de date." }, { status: 500 });
   }
 
-  await setSoldOut(product.id, size, soldOut);
   return Response.json({ stock: await getStockReport() });
 }

@@ -1,7 +1,7 @@
 import { isAdminRequest } from "@/lib/admin-auth";
 import { prisma } from "@/lib/prisma";
 
-const STATUSES = ["PENDING", "PAID", "SHIPPED"] as const;
+const STATUSES = ["PENDING", "PAID", "SHIPPED", "COMPLETED", "CANCELLED"] as const;
 
 const unauthorized = () => Response.json({ error: "Neautorizat" }, { status: 401 });
 
@@ -26,4 +26,16 @@ export async function POST(req: Request) {
   const order = await prisma.order.update({ where: { id: orderId }, data: { status } }).catch(() => null);
   if (!order) return Response.json({ error: "Comanda nu există" }, { status: 404 });
   return Response.json({ order });
+}
+
+// Deletes an order and its items. Units it held go back into stock.
+export async function DELETE(req: Request) {
+  if (!isAdminRequest(req)) return unauthorized();
+
+  const { orderId } = await req.json().catch(() => ({}));
+  if (typeof orderId !== "string") return Response.json({ error: "Date invalide" }, { status: 400 });
+
+  const order = await prisma.order.delete({ where: { id: orderId } }).catch(() => null);
+  if (!order) return Response.json({ error: "Comanda nu există" }, { status: 404 });
+  return Response.json({ ok: true });
 }

@@ -20,7 +20,7 @@ model Order {
   postalCode      String      @default("")
   total           Float
   shippingCost    Float
-  // PENDING | PAID | SHIPPED
+  // PENDING | PAID | SHIPPED | COMPLETED | CANCELLED
   status          String      @default("PENDING")
   paymentMethod   String      @default("card")
   stripeSessionId String?     @unique
@@ -45,6 +45,16 @@ model SoldOutVariant {
   productId String
   size      String
   createdAt DateTime @default(now())
+
+  @@id([productId, size])
+}
+
+// Units of a product size sold outside the site (OLX, in person); reduces available stock.
+model ExternalSale {
+  productId String
+  size      String
+  quantity  Int      @default(0)
+  updatedAt DateTime @updatedAt
 
   @@id([productId, size])
 }

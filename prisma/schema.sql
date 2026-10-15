@@ -44,3 +44,13 @@ CREATE TABLE "SoldOutVariant" (
     PRIMARY KEY ("productId", "size")
 );
 
+-- CreateTable
+CREATE TABLE "ExternalSale" (
+    "productId" TEXT NOT NULL,
+    "size" TEXT NOT NULL,
+    "quantity" INTEGER NOT NULL DEFAULT 0,
+    "updatedAt" DATETIME NOT NULL,
+
+    PRIMARY KEY ("productId", "size")
+);
+

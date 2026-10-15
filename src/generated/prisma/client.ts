@@ -56,3 +56,8 @@ export type OrderItem = Prisma.OrderItemModel
  * 
  */
 export type SoldOutVariant = Prisma.SoldOutVariantModel
+/**
+ * Model ExternalSale
+ * 
+ */
+export type ExternalSale = Prisma.ExternalSaleModel
