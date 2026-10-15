@@ -38,3 +38,13 @@ model OrderItem {
   quantity    Int
   price       Float
 }
+
+// A product size the admin marked as out of stock by hand (e.g. sold outside the site).
+// The row's presence is the flag; deleting it puts the size back on sale.
+model SoldOutVariant {
+  productId String
+  size      String
+  createdAt DateTime @default(now())
+
+  @@id([productId, size])
+}

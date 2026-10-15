@@ -27,3 +27,8 @@ export type Order = Prisma.OrderModel
  * 
  */
 export type OrderItem = Prisma.OrderItemModel
+/**
+ * Model SoldOutVariant
+ * 
+ */
+export type SoldOutVariant = Prisma.SoldOutVariantModel

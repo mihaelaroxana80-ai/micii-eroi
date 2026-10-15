@@ -37,8 +37,9 @@ export function SizePicker({ variants, stock, selected, onSelect, compact }: Pro
             <span className="font-bold">{label}</span>
             {compact ? (
               <span className="text-xs text-stone-500">{left === 0 ? "epuizat" : `${left} buc`}</span>
+            ) : left === 0 ? (
+              <span className="inline-block text-xs font-bold">Epuizat</span>
             ) : (
-              left > 0 &&
               left <= 2 && <span className="text-xs font-bold text-orange-600">Ultimele {left} buc!</span>
             )}
           </button>

@@ -398,7 +398,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   Order: 'Order',
-  OrderItem: 'OrderItem'
+  OrderItem: 'OrderItem',
+  SoldOutVariant: 'SoldOutVariant'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -414,7 +415,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "order" | "orderItem"
+    modelProps: "order" | "orderItem" | "soldOutVariant"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -566,6 +567,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    SoldOutVariant: {
+      payload: Prisma.$SoldOutVariantPayload<ExtArgs>
+      fields: Prisma.SoldOutVariantFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SoldOutVariantFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SoldOutVariantPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SoldOutVariantFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SoldOutVariantPayload>
+        }
+        findFirst: {
+          args: Prisma.SoldOutVariantFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SoldOutVariantPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SoldOutVariantFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SoldOutVariantPayload>
+        }
+        findMany: {
+          args: Prisma.SoldOutVariantFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SoldOutVariantPayload>[]
+        }
+        create: {
+          args: Prisma.SoldOutVariantCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SoldOutVariantPayload>
+        }
+        createMany: {
+          args: Prisma.SoldOutVariantCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SoldOutVariantCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SoldOutVariantPayload>[]
+        }
+        delete: {
+          args: Prisma.SoldOutVariantDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SoldOutVariantPayload>
+        }
+        update: {
+          args: Prisma.SoldOutVariantUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SoldOutVariantPayload>
+        }
+        deleteMany: {
+          args: Prisma.SoldOutVariantDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SoldOutVariantUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SoldOutVariantUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SoldOutVariantPayload>[]
+        }
+        upsert: {
+          args: Prisma.SoldOutVariantUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SoldOutVariantPayload>
+        }
+        aggregate: {
+          args: Prisma.SoldOutVariantAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSoldOutVariant>
+        }
+        groupBy: {
+          args: Prisma.SoldOutVariantGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SoldOutVariantGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SoldOutVariantCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SoldOutVariantCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -634,6 +709,15 @@ export const OrderItemScalarFieldEnum = {
 } as const
 
 export type OrderItemScalarFieldEnum = (typeof OrderItemScalarFieldEnum)[keyof typeof OrderItemScalarFieldEnum]
+
+
+export const SoldOutVariantScalarFieldEnum = {
+  productId: 'productId',
+  size: 'size',
+  createdAt: 'createdAt'
+} as const
+
+export type SoldOutVariantScalarFieldEnum = (typeof SoldOutVariantScalarFieldEnum)[keyof typeof SoldOutVariantScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -838,6 +922,7 @@ export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaC
 export type GlobalOmitConfig = {
   order?: Prisma.OrderOmit
   orderItem?: Prisma.OrderItemOmit
+  soldOutVariant?: Prisma.SoldOutVariantOmit
 }
 
 /* Types for Logging */

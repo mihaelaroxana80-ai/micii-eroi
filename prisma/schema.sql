@@ -35,3 +35,12 @@ CREATE UNIQUE INDEX "Order_orderNumber_key" ON "Order"("orderNumber");
 -- CreateIndex
 CREATE UNIQUE INDEX "Order_stripeSessionId_key" ON "Order"("stripeSessionId");
 
+-- CreateTable
+CREATE TABLE "SoldOutVariant" (
+    "productId" TEXT NOT NULL,
+    "size" TEXT NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    PRIMARY KEY ("productId", "size")
+);
+
